@@ -9,7 +9,7 @@
 
 ### Задача 2: OpenAPI Spec
 * **Стандарт**: OpenAPI 3.0.0 (YAML)
-* **Файл**: [api/openapi.yaml](./api/openapi.yaml)
+* **Файл**: [api/openapi.yaml](./docs/api/openapi.yaml)
 
 ## Как просмотреть
 1.  Для просмотра Sequence Diagram [SRS](./docs/srs/virtual-card-issuance.md).
