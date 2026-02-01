@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: Create V Card
+  version: 1.0.0
+
+paths:
+  /cards/virtual:
+    post:
+      summary: Создание новой виртуальной карты
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          description: Токен авторизации
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '201':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnayResponse'
+        '409':
+          description: Конфликт — карта уже существует
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    OnayResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/VirtualCardData'
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "CARD_ALREADY_EXISTS"
+            message:
+              type: string
+              example: "У пользователя уже имеется активная виртуальная карта данного типа"
+
+    VirtualCardData:
+      type: object
+      properties:
+        cardId:
+          type: string
+          example: "77a1-4b2c-9d11"
+        type:
+          type: string
+          description: "Тип карты: UNIFIED (Единая), STUDENT (Школьная)"
+          enum:
+            - UNIFIED
+            - STUDENT
+          example: "UNIFIED"
+        balance:
+          type: number
+          example: 0
+        currency:
+          type: string
+          example: "KZT"
